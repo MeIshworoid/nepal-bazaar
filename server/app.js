@@ -40,18 +40,30 @@ const CreateAllFolder = require("./config/uploadFolderCreateScript");
 CreateAllFolder();
 
 // Database Connection
+// old code for mongoose connection for mongoose version 5.x, newer version may pose mongodb-driver issues
+// mongoose
+//   .connect(process.env.DATABASE, {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true,
+//     useCreateIndex: true,
+//   })
+//   .then(() =>
+//     console.log(
+//       "==============Mongodb Database Connected Successfully=============="
+//     )
+//   )
+//   .catch((err) => console.log("Database Not Connected !!!"));
+//
+
+// new code for mongoose connection for mongoose version 6.x
 mongoose
-  .connect(process.env.DATABASE, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true,
-  })
+  .connect(process.env.DATABASE /* connection string from .env */)
   .then(() =>
     console.log(
       "==============Mongodb Database Connected Successfully=============="
     )
   )
-  .catch((err) => console.log("Database Not Connected !!!"));
+  .catch((err) => console.error("Database Not Connected !!!", err));
 
 // Middleware
 app.use(morgan("dev"));
